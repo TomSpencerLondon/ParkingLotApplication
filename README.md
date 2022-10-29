@@ -26,5 +26,5 @@ The Spring ComponentScan scans the base package and reads classes with annotatio
 
 ![component-scan](https://user-images.githubusercontent.com/27693622/198837369-d077b23d-fb85-4b32-b9b3-de812599574a.png)
 
-@ComponentScan without arguments tells Spring to scan the current package and all of its sub-packages. The annotation
-@SpringBootApplication is a combination of three annotations: @Configuration, @EnableAutoConfiguration and @ComponentScan.
+**@ComponentScan** without arguments tells Spring to scan the current package and all of its sub-packages. The annotation
+**@SpringBootApplication** is a combination of three annotations: **@Configuration**, **@EnableAutoConfiguration** and **@ComponentScan**.
