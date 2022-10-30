@@ -43,7 +43,7 @@ It is added by inserting springdoc-openapi-ui as a dependency in the pom.xml fil
 		</dependency>
 ```
 
-The bean for the custom open API docs can then be added to the Spring context as a bean:
+The custom open API docs can then be added to the Spring context as a bean:
 ```java
 	@Bean
 	public OpenAPI customOpenAPI(@Value("${springdoc.version}") String appVersion) {
@@ -53,3 +53,4 @@ The bean for the custom open API docs can then be added to the Spring context as
 						.license(new License().name("Apache 2.0").url("http://springdoc.org")));
 	}
 ```
+Documentation for the API is then available on http://localhost:8080/swagger-ui/index.html
