@@ -28,3 +28,28 @@ The Spring ComponentScan scans the base package and reads classes with annotatio
 
 **@ComponentScan** without arguments tells Spring to scan the current package and all of its sub-packages. The annotation
 **@SpringBootApplication** is a combination of three annotations: **@Configuration**, **@EnableAutoConfiguration** and **@ComponentScan**.
+
+### Swagger
+Swagger is an open source project used to generate the REST API documents for RESTful web services. It provides a user interface to access our RESTful web services via the web browser.
+
+![Screenshot 2022-10-30 at 15 46 57](https://user-images.githubusercontent.com/27693622/198888046-e6b4c2ae-4d30-4096-8111-7438bc6211fc.png)
+
+It is added by inserting springdoc-openapi-ui as a dependency in the pom.xml file:
+```java
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.9</version>
+		</dependency>
+```
+
+The bean for the custom open API docs can then be added to the Spring context as a bean:
+```java
+	@Bean
+	public OpenAPI customOpenAPI(@Value("${springdoc.version}") String appVersion) {
+		return new OpenAPI()
+				.components(new Components())
+				.info(new Info().title("EMS API").version(appVersion)
+						.license(new License().name("Apache 2.0").url("http://springdoc.org")));
+	}
+```
