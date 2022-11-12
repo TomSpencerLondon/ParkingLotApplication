@@ -1,4 +1,4 @@
-package com.tomspencerlondon;
+package com.tomspencerlondon.service;
 
 public interface ParkingLotService {
 
