@@ -1,0 +1,36 @@
+Ubiquitous Language
+
+
+Design
+VehicleDto
+  id
+  vehicleType
+  Vehicle number (registration)
+  vehicleOwnerName
+
+Parking Lot
+  id
+  Capacity (10 vehicles)
+
+Parking Spot
+  id
+  filled
+
+
+Tasks
+1. Create VehicleDto [done]
+2. Create Park API
+  - park vehicle in parking lot [done]
+  - unpark vehicle in parking lot [done]
+  - get details of vehicle in parked in parking spot by id [done]
+
+
+Notes:
+https://www.baeldung.com/spring-requestparam-vs-pathvariable
+ResponseEntity<?>
+return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
+https://docs.google.com/spreadsheets/d/1FVOVmVjYZFUHb9titZ5_nhiVczkwnHlEvvPlys6LVB4/edit#gid=0
+https://docs.google.com/spreadsheets/d/1WEFLNlon6aMEb6L8OLrQ4O6B-eXgI9seeymJFgkeCLg/edit#gid=1786047108
+
+Homework:
+1. put - update [done]
