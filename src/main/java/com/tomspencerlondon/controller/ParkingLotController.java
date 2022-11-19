@@ -33,7 +33,8 @@ public class ParkingLotController {
   public String parkVehicle(@RequestBody VehicleDto vehicleDto) {
     vehicleDtos.add(vehicleDto);
 
-    return "Vehicle parked on parking slot: " + vehicleDto.getId();
+    return "Vehicle parked on parking slot: ";
+//        vehicleDto.getId();
   }
 
   @PostMapping("/unpark")
@@ -77,12 +78,22 @@ public class ParkingLotController {
   public String updateParkedVehicleNumber(int parkingId, String vehicleNumber) {
     try {
       VehicleDto vehicleDto = vehicleDtos.get(parkingId);
-      vehicleDto.setVehicleNumber(vehicleNumber);
+//      vehicleDto.setVehicleNumber(vehicleNumber);
       vehicleDtos.set(parkingId, vehicleDto);
     } catch (Exception e) {
       return "Failed to update";
     }
     return "updated vehicle parked at: " + parkingId + " with vehicleNumber " + vehicleNumber;
+  }
+
+  @PostMapping("/dumpVehicles")
+  public VehicleDto dumpVehicles() {
+    return VehicleDto.builder()
+        .id(1)
+        .vehicleType("mercedes")
+        .vehicleNumber("123")
+        .vehicleOwnerName("Tom")
+        .build();
   }
 
 }

@@ -34,3 +34,22 @@ https://docs.google.com/spreadsheets/d/1WEFLNlon6aMEb6L8OLrQ4O6B-eXgI9seeymJFgke
 
 Homework:
 1. put - update [done]
+
+
+Homework (19/11/22)
+- Study maven dependency scopes
+https://www.baeldung.com/maven-dependency-scopes
+- Look at internal working of hashmap
+https://www.geeksforgeeks.org/internal-working-of-hashmap-java/
+- Look at videos of internal working of hashmap
+- Look at maven settings:
+https://www.baeldung.com/maven-settings-xml
+- Look at SQL docs:
+https://learnsql.com/blog/sql-order-of-operations/#:~:text=Six%20Operations%20to%20Order%3A%20SELECT,developer%20to%20know%20this%20order.
+- Hackerrank practice SQL:
+https://www.hackerrank.com/challenges/african-cities/problem?isFullScreen=true
+- Reference:
+https://www.w3schools.com/sql/sql_join_inner.asp
+Next week:
+- embedded database + jpa
+- Cloud database Qwik Labs (check coupon code)
