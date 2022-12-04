@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -85,5 +89,36 @@ public class ParkingLotJpaController {
   @GetMapping("/vehiclesSortedByName")
   public List<VehicleDto> getBookStoresSortedByName() {
     return vehicleRepository.findAll(Sort.by(Direction.ASC, "vehicleOwnerName"));
+  }
+
+  @GetMapping("/countNumberOfVehicles")
+  public Long countNumberOfVehicles() {
+    return vehicleRepository.count();
+  }
+
+  @GetMapping("/vehicleIdExists")
+  public Boolean vehicleExistsById(Integer id) {
+    return vehicleRepository.existsById(id);
+  }
+
+//  Homework: 4/12/22
+//  1. Get Vehicles by vehicle type
+//  2. Truncate deleteAll endpoint
+
+  @GetMapping("/vehiclesByType")
+  public List<VehicleDto> getVehiclesWithVehicleOwner(String vehicleType) {
+    ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+        .withMatcher("vehicleType",
+            ExampleMatcher.GenericPropertyMatchers.contains())
+        .withIgnorePaths("id", "vehicleOwnerName", "vehicleNumber");
+    VehicleDto vehicleExample = VehicleDto.builder().vehicleType(vehicleType).build();
+    Example<VehicleDto> example = Example.of(vehicleExample, exampleMatcher);
+    return vehicleRepository.findAll(example);
+  }
+
+  @DeleteMapping("/deleteAllVehicles")
+  ResponseEntity<String> deleteAllVehicles() {
+    vehicleRepository.deleteAll();
+    return new ResponseEntity<>("Successful deletion", HttpStatus.OK);
   }
 }
