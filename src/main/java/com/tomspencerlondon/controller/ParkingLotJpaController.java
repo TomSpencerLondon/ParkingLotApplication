@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,8 +55,8 @@ public class ParkingLotJpaController {
   }
 
   @GetMapping("/pageableVehicles")
-  public Page<VehicleDto> getPageableVehicles() {
-    PageRequest pageable = PageRequest.of(0, 2);
+  public Page<VehicleDto> getPageableVehicles(int page, int size) {
+    PageRequest pageable = PageRequest.of(page, size);
     return vehicleRepository
         .findAll(pageable);
   }
@@ -78,5 +80,10 @@ public class ParkingLotJpaController {
       vehicleRepository.deleteById(v.getId());
       return v;
     }).map(VehicleDto::toString).orElse("Not found");
+  }
+
+  @GetMapping("/vehiclesSortedByName")
+  public List<VehicleDto> getBookStoresSortedByName() {
+    return vehicleRepository.findAll(Sort.by(Direction.ASC, "vehicleOwnerName"));
   }
 }
