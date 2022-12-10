@@ -1,6 +1,7 @@
 package com.tomspencerlondon.controller;
 
 import com.tomspencerlondon.exceptions.VehicleNotFoundException;
+import com.tomspencerlondon.exceptions.VehicleNotFoundRuntimeException;
 import com.tomspencerlondon.model.VehicleDto;
 import com.tomspencerlondon.repository.VehicleRepository;
 import java.util.List;
@@ -77,7 +78,7 @@ public class ParkingLotJpaController {
       vehicleRepository.saveAndFlush(v);
       return v;
     }).map(VehicleDto::toString)
-        .orElseThrow(() -> new VehicleNotFoundException("Vehicle not found"));
+        .orElseThrow(() -> new VehicleNotFoundRuntimeException("Vehicle not found"));
   }
 
   @DeleteMapping("/unpark")
