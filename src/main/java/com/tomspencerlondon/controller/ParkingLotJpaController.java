@@ -1,5 +1,6 @@
 package com.tomspencerlondon.controller;
 
+import com.tomspencerlondon.exceptions.VehicleNotFoundException;
 import com.tomspencerlondon.model.VehicleDto;
 import com.tomspencerlondon.repository.VehicleRepository;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,8 +67,8 @@ public class ParkingLotJpaController {
         .findAll(pageable);
   }
 
-  @PostMapping("/updateVehicle")
-  public String updateVehicle(VehicleDto updateVehicle) {
+  @PutMapping("/updateVehicle")
+  public String updateVehicle(VehicleDto updateVehicle) throws Exception {
     Optional<VehicleDto> vehicleDto = vehicleRepository.findById(updateVehicle.getId());
     return vehicleDto.map(v -> {
       v.setVehicleType(updateVehicle.getVehicleType());
@@ -74,7 +76,8 @@ public class ParkingLotJpaController {
       v.setVehicleNumber(updateVehicle.getVehicleNumber());
       vehicleRepository.saveAndFlush(v);
       return v;
-    }).map(VehicleDto::toString).orElse("Not found");
+    }).map(VehicleDto::toString)
+        .orElseThrow(() -> new VehicleNotFoundException("Vehicle not found"));
   }
 
   @DeleteMapping("/unpark")
@@ -102,8 +105,8 @@ public class ParkingLotJpaController {
   }
 
 //  Homework: 4/12/22
-//  1. Get Vehicles by vehicle type
-//  2. Truncate deleteAll endpoint
+//  1. Get Vehicles by vehicle type [done]
+//  2. Truncate deleteAll endpoint [done]
 
   @GetMapping("/vehiclesByType")
   public List<VehicleDto> getVehiclesWithVehicleOwner(String vehicleType) {
