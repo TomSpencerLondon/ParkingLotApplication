@@ -1,4 +1,4 @@
-package com.tomspencerlondon.model;
+package com.tomspencerlondon.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
