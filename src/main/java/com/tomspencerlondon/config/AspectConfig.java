@@ -2,8 +2,6 @@ package com.tomspencerlondon.config;
 
 import com.tomspencerlondon.entity.AuditLog;
 import com.tomspencerlondon.repository.AuditRepository;
-import com.tomspencerlondon.repository.VehicleRepository;
-import java.util.Date;
 import java.time.LocalDate;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -16,7 +14,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Repository;
 
 @Slf4j
 @Aspect
@@ -38,10 +35,26 @@ public class AspectConfig {
 		log.info(description);
 		auditRepository.save(
 				AuditLog.builder()
-						.id(1)
-						.createDate(new Date())
+						.createDate(LocalDate.now())
 						.description(description)
 						.build());
+	}
+
+	@Before("execution(public * com.tomspencerlondon.serviceimpl.*.*(..) )")
+	public void rateLimitExecution(JoinPoint joinPoint) {
+		long count = auditRepository.findAllByCreateDate(LocalDate.now()).size();
+
+		if (count > 10) {
+			String dnsAttackMessage = "Rate Limit reached - possible DNS attack";
+			auditRepository.save(
+					AuditLog.builder()
+							.createDate(LocalDate.now())
+							.description(dnsAttackMessage)
+							.build());
+			log.info(dnsAttackMessage);
+			throw new IllegalStateException(dnsAttackMessage);
+		}
+
 	}
 
 //	@AfterReturning("execution(public * com.example.aop.serviceImpl.EmployeeServiceImpl.addEmployee(..) )")

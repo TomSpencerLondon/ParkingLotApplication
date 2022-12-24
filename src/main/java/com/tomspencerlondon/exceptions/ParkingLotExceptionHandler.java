@@ -31,7 +31,7 @@ public class ParkingLotExceptionHandler {
         .errorMessages(Collections.singletonList(exception.getMessage()))
         .build();
 
-    log.info("Error Response is: {}", errorDto);
+    log.info("Error Response is: {} {}", errorDto, exception.getMessage());
 
     return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
   }

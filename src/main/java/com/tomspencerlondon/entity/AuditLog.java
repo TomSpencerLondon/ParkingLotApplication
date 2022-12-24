@@ -1,6 +1,6 @@
 package com.tomspencerlondon.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +28,7 @@ public class AuditLog {
   private Integer id;
 
   @Column
-  private Date createDate;
+  private LocalDate createDate;
 
   @Column
   private String description;
