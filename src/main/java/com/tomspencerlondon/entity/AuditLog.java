@@ -1,6 +1,6 @@
 package com.tomspencerlondon.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@Entity
 @Getter
 @Setter
 @ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class AuditLog {
 
   @Id
@@ -27,7 +27,7 @@ public class AuditLog {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(columnDefinition = "date default sysdate")
+  @Column
   private Date createDate;
 
   @Column
