@@ -31,7 +31,7 @@ public class AspectConfig {
 // packageName.className.methodName(..)
 	@Before("execution(public * com.tomspencerlondon.serviceimpl.*.*(..) )")
 	public void logBeforeAllMethods(JoinPoint joinPoint) {
-		String description = joinPoint.getSignature().getName() + " Started";
+		String description = joinPoint.getSignature().getName();
 		log.info(description);
 		auditRepository.save(
 				AuditLog.builder()
@@ -42,7 +42,10 @@ public class AspectConfig {
 
 	@Before("execution(public * com.tomspencerlondon.serviceimpl.*.*(..) )")
 	public void rateLimitExecution(JoinPoint joinPoint) {
-		long count = auditRepository.findAllByCreateDate(LocalDate.now()).size();
+		long count = auditRepository
+				.findAllByCreateDate(LocalDate.now()).stream()
+				.filter(a -> a.getDescription().equals(joinPoint.getSignature().getName()))
+				.count();
 
 		if (count > 10) {
 			String dnsAttackMessage = "Rate Limit reached - possible DNS attack";
